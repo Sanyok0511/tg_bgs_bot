@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+telegram:
+  configuration:
+    name: botname
+    token: token
+
+spring:
+  datasource:
+    username: elite
+    password: elite
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/elite
