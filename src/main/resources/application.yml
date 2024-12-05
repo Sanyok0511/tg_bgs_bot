@@ -7,8 +7,17 @@ telegram:
     token: token
 
 spring:
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: none
   datasource:
     username: elite
     password: elite
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/elite
+  liquibase:
+    enabled: true
+    change-log: config/liquibase/master.xml
+  application:
+    name: elite-tg-bot

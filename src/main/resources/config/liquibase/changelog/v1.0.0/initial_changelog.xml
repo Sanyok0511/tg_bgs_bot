@@ -1,0 +1,171 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro
+                    http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="initial_application_settings" author="Alexander">
+        <createTable tableName="application_setting">
+            <column autoIncrement="true" name="id" startWith="5" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="application_setting_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="chat_id" type="BIGINT"/>
+            <column name="message_thread_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_commander" author="Alexander (generated)">
+        <createTable tableName="commander">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="commander_pkey"/>
+            </column>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_conflict" author="Alexander (generated)">
+        <createTable tableName="conflict">
+            <column autoIncrement="true" name="id" startWith="5" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="conflict_pkey"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="war_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="left_won_days" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="left_faction_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="right_won_days" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="right_faction_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="star_system_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_update" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_faction" author="Alexander (generated)">
+        <createTable tableName="faction">
+            <column autoIncrement="true" name="id" startWith="13" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="faction_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_influence" author="Alexander (generated)">
+        <createTable tableName="influence">
+            <column autoIncrement="true" name="id" startWith="14" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="influence_pkey"/>
+            </column>
+            <column name="faction_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="star_system_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="influence" type="FLOAT4"/>
+            <column name="last_update" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_mission" author="Alexander (generated)">
+        <createTable tableName="mission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="mission_pkey"/>
+            </column>
+            <column name="faction_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="star_system_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destination_faction_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destination_star_system_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="influence" type="SMALLINT"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="mission_id" type="VARCHAR(255)"/>
+            <column name="timestamp" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_star_system" author="Alexander (generated)">
+        <createTable tableName="star_system">
+            <column autoIncrement="true" name="id" startWith="3" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="star_system_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_tg_messages" author="Alexander (generated)">
+        <createTable tableName="tg_messages">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tg_messages_pkey"/>
+            </column>
+            <column name="chat_id" type="BIGINT"/>
+            <column name="message_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_fk_conflict_left_faction" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="right_faction_id" baseTableName="conflict"
+                                 constraintName="fk_conflict_left_faction" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="faction" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_conflict_right_faction" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="left_faction_id" baseTableName="conflict"
+                                 constraintName="fk_conflict_rigth_faction" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="faction" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_conflict_star_system" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="star_system_id" baseTableName="conflict"
+                                 constraintName="fk_conflict_star_system" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="star_system" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_influence_faction" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="faction_id" baseTableName="influence"
+                                 constraintName="fk_influence_faction" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="faction" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_influence_star_system" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="star_system_id" baseTableName="influence"
+                                 constraintName="fk_influence_star_system" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="star_system" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_mission_faction" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="faction_id" baseTableName="mission"
+                                 constraintName="fk_mission_faction" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="faction" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_mission_star_system" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="star_system_id" baseTableName="mission"
+                                 constraintName="fk_mission_star_system" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="star_system" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_mission_dest_faction" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="destination_faction_id" baseTableName="mission"
+                                 constraintName="fk_mission_destination_faction" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="faction" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_fk_mission_dest_star_system" author="Alexander (generated)">
+        <addForeignKeyConstraint baseColumnNames="destination_star_system_id" baseTableName="mission"
+                                 constraintName="fk_mission_destination_star_system" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="star_system" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
