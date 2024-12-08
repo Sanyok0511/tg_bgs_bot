@@ -36,8 +36,8 @@ public class Mission {
     @Column(name = "status")
     private String statusValue;
     private String missionId;
-    @Temporal(TemporalType.DATE)
-    private Date timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
 
     @PostLoad
     void fillTransient() {
@@ -46,8 +46,16 @@ public class Mission {
         }
     }
 
+
     @PrePersist
     void fillPersistent() {
+        if (status != null) {
+            this.statusValue = status.getStatus();
+        }
+    }
+
+    @PreUpdate
+    void onUpdate() {
         if (status != null) {
             this.statusValue = status.getStatus();
         }
@@ -65,7 +73,7 @@ public class Mission {
                 ", influence=" + influence +
                 ", status=" + status +
                 ", missionId='" + missionId + '\'' +
-                ", lastUpdate=" + timestamp +
+                ", lastUpdate=" + lastUpdate +
                 '}';
     }
 }

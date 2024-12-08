@@ -34,6 +34,7 @@ public class Conflict {
     private WarType warType;
     @Column(name = "war_type")
     private String warTypeValue;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 
     @PostLoad

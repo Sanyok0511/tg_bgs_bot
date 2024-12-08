@@ -44,22 +44,22 @@ public class StarSystemProcessor {
     @Transactional
     public void updateStarSystem(Event event) {
         String starSystemName = event.getStarSystem();
-        Date timestamp = event.getTimestamp();
+        Date lastUpdate = event.getTimestamp();
         StarSystem starSystem = starSystemDao.findOrCreateStarSystem(starSystemName);
 
         List<Faction> factions = event.getFactions();
 
         if (factions != null) {
-            factions.forEach(faction -> saveFaction(faction, starSystem, timestamp));
+            factions.forEach(faction -> saveFaction(faction, starSystem, lastUpdate));
         }
 
         List<DetailConflict> conflicts = event.getConflicts();
         if (conflicts != null) {
-            conflicts.forEach(detailConflict -> saveConflict(detailConflict, starSystem, timestamp));
+            conflicts.forEach(detailConflict -> saveConflict(detailConflict, starSystem, lastUpdate));
         }
     }
 
-    private void saveFaction(Faction faction, StarSystem system, Date timestamp) {
+    private void saveFaction(Faction faction, StarSystem system, Date lastUpdate) {
         String factionName = faction.getName();
         com.elite.dangerous.db.entity.Faction factionEntity = factionDao.findOrCreateFactionByName(factionName);
         if (factionEntity == null) {
@@ -74,11 +74,11 @@ public class StarSystemProcessor {
                 influence = new Influence();
                 influence.setStarSystem(system);
                 influence.setFaction(factionEntity);
-                influence.setLastUpdate(timestamp);
+                influence.setLastUpdate(lastUpdate);
             }
             if (influence.getInfluence() == null || !influence.getInfluence().equals(faction.getInfluence())) {
                 influence.setInfluence(faction.getInfluence());
-                influence.setLastUpdate(timestamp);
+                influence.setLastUpdate(lastUpdate);
                 influenceDao.save(influence);
             }
         } else {
@@ -86,13 +86,13 @@ public class StarSystemProcessor {
             influence.setStarSystem(system);
             influence.setFaction(factionEntity);
             influence.setInfluence(faction.getInfluence());
-            influence.setLastUpdate(timestamp);
+            influence.setLastUpdate(lastUpdate);
         }
         influenceDao.save(influence);
         log.trace("Fraction information update. Fraction: {}", faction);
     }
 
-    private void saveConflict(DetailConflict detailConflict, StarSystem starSystem, Date timestamp) {
+    private void saveConflict(DetailConflict detailConflict, StarSystem starSystem, Date lastUpdate) {
         ConflictFaction conflictFactionLeft = detailConflict.getFactionLeft();
         ConflictFaction conflictFactionRigth = detailConflict.getFactionRight();
 
@@ -118,7 +118,7 @@ public class StarSystemProcessor {
         conflict.setWarType(WarType.of(detailConflict.getWarType()));
         conflict.setStarSystem(starSystem);
         conflict.setStatus(detailConflict.getStatus());
-        conflict.setLastUpdate(timestamp);
+        conflict.setLastUpdate(lastUpdate);
         conflictDao.save(conflict);
         log.trace("Conflict information updated. Conflict: {} ", conflict);
     }

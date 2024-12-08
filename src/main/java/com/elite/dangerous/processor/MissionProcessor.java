@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 public class MissionProcessor {
-
-
     private MissionDao missionRepository;
     private FactionDao factionDao;
     private StarSystemDao starSystemDao;
@@ -48,8 +46,10 @@ public class MissionProcessor {
         if (mission.getInfluence() == null) {
             mission.setInfluence(getInfluence(event));
         }
+        mission.setStatus(StatusMission.of(event.getEvent()));
+        mission.setLastUpdate(event.getTimestamp());
         missionRepository.save(mission);
-        log.trace("Mission saved. Mission: {} ", mission);
+        log.trace("Mission updated. Mission: {} ", mission);
     }
 
     private Mission createMission(Event event) {
@@ -67,8 +67,14 @@ public class MissionProcessor {
         Faction faction = factionDao.findOrCreateFactionByName(event.getFaction());
         mission.setFaction(faction);
 
-        Faction destionationFaction = factionDao.findOrCreateFactionByName(event.getTargetFaction());
-        mission.setDestinationFaction(destionationFaction);
+        // If destinationFaction is null, then mission for current fraction in current starsystem
+        if (event.getTargetFaction() != null) {
+            Faction destionationFaction = factionDao.findOrCreateFactionByName(event.getTargetFaction());
+            mission.setDestinationFaction(destionationFaction);
+        } else {
+            mission.setDestinationFaction(faction);
+        }
+
 
         mission.setInfluence(getInfluence(event));
 
@@ -77,7 +83,7 @@ public class MissionProcessor {
 
         StarSystem destionationStarSystem = starSystemDao.findOrCreateStarSystem(event.getDestinationSystem());
         mission.setDestinationStarSystem(destionationStarSystem);
-        mission.setTimestamp(event.getTimestamp());
+        mission.setLastUpdate(event.getTimestamp());
 
         return mission;
     }

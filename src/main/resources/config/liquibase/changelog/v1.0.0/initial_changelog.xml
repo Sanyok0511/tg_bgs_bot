@@ -47,7 +47,7 @@
             <column name="star_system_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="last_update" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_update" type="timestamp"/>
         </createTable>
     </changeSet>
     <changeSet id="initial_faction" author="Alexander (generated)">
@@ -70,7 +70,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="influence" type="FLOAT4"/>
-            <column name="last_update" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_update" type="timestamp"/>
         </createTable>
     </changeSet>
     <changeSet id="initial_mission" author="Alexander (generated)">
@@ -94,7 +94,7 @@
             <column name="name" type="VARCHAR(255)"/>
             <column name="status" type="VARCHAR(255)"/>
             <column name="mission_id" type="VARCHAR(255)"/>
-            <column name="timestamp" type="date"/>
+            <column name="last_update" type="timestamp"/>
         </createTable>
     </changeSet>
     <changeSet id="initial_star_system" author="Alexander (generated)">

@@ -22,5 +22,6 @@ public class Influence {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private StarSystem starSystem;
     private Float influence;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 }
