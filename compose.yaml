@@ -1,0 +1,21 @@
+services:
+  elite-bgs-tg-bot:
+    container_name: elite-bgs-tg-bot
+    ports:
+      - 8081:8081
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/elite
+      - SPRING_DATASOURCE_USERNAME=elite
+      - SPRING_DATASOURCE_PASSWORD=elite
+      - MANAGEMENT_ENDPOINTS_WEB_ECPOSURE_INCLUDE=true
+      - MANAGEMENT_ENDPOINT_SHUTDOWN_ENABLED=true
+      - ENDPOINTS_SHUTDOWN_ENABLED=true
+      - TELEGRAM_CONFIGURATION_NAME=bot_name
+      - TELEGRAM_CONFIGURATION_TOKEN=bot_token
+    volumes:
+      - elite-bgs-tg:/opt
+volumes:
+  elite-bgs-tg:
