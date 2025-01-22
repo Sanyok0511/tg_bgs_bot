@@ -11,7 +11,9 @@ public interface ApplicationSettingsRepository extends CrudRepository<Applicatio
     Iterable<ApplicationSetting> findAll();
 
     List<ApplicationSetting> findByName(ApplicationSettingName name);
+    List<ApplicationSetting> findByChatIdAndName(Long chatId, ApplicationSettingName name);
     ApplicationSetting findByNameAndValue(ApplicationSettingName name, String value);
 
     ApplicationSetting findByNameAndChatId(ApplicationSettingName name, Long chatId);
+    ApplicationSetting findByNameAndValueAndChatId(ApplicationSettingName name, String value, Long chatId);
 }

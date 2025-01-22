@@ -17,11 +17,11 @@ public class ConflictDao {
     }
 
     public Conflict findByStarSystemAndFaction(Faction faction, StarSystem starSystem) {
-        return conflictRepository.findConflictByFactionLeftOrFactionRightAndStarSystem(faction, faction, starSystem);
+        return conflictRepository.findConflictByFactionLeftAndFactionRightAndStarSystem(faction, faction, starSystem);
     }
 
     public Conflict findByStarSystemAndFactions(Faction factionLeft, Faction factionRight, StarSystem starSystem) {
-        return conflictRepository.findConflictByFactionLeftOrFactionRightAndStarSystem(factionLeft, factionRight, starSystem);
+        return conflictRepository.findConflictByFactionLeftAndFactionRightAndStarSystem(factionLeft, factionRight, starSystem);
     }
 
     public void save(Conflict conflict) {

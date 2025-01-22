@@ -1,5 +1,6 @@
 package com.elite.dangerous.tg.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 
 
 @Data
+@JsonFormat
 public class InfluenceDisplay {
     private String faction;
     private List<InfluenceStarSystem> influenceInformation = new ArrayList<>();
@@ -28,6 +30,7 @@ public class InfluenceDisplay {
     }
 
     @AllArgsConstructor
+    @Data
     private class InfluenceStarSystem {
         private String starSystem;
         private String influence;

@@ -7,4 +7,6 @@ import lombok.Data;
 public class FactionEffectInfluence {
     @JsonProperty(value = "Influence")
     private String influence;
+    @JsonProperty(value = "Trend")
+    private String trend;
 }

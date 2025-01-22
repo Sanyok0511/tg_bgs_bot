@@ -21,6 +21,11 @@ public class ApplicationSetttingsDao {
         return applicationSettingsRepository.findByName(name);
     }
 
+    public List<ApplicationSetting> findFactionByChatId(Long chatId) {
+        return applicationSettingsRepository.findByChatIdAndName(chatId, ApplicationSettingName.FACTION);
+    }
+
+
     public ApplicationSetting findByNameAndValue(ApplicationSettingName name, String value) {
         return applicationSettingsRepository.findByNameAndValue(name, value);
     }
@@ -28,7 +33,13 @@ public class ApplicationSetttingsDao {
     public ApplicationSetting findByNameAndChatId(ApplicationSettingName name, Long chatId) {
         return applicationSettingsRepository.findByNameAndChatId(name, chatId);
     }
+    public ApplicationSetting findByNameAndValueAndChatId(ApplicationSettingName name, String value, Long chatId) {
+        return applicationSettingsRepository.findByNameAndValueAndChatId(name, value, chatId);
+    }
     public void save(ApplicationSetting setting) {
         applicationSettingsRepository.save(setting);
+    }
+    public void remove(ApplicationSetting setting) {
+        applicationSettingsRepository.delete(setting);
     }
 }

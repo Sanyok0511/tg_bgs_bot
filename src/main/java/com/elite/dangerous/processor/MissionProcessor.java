@@ -8,6 +8,7 @@ import com.elite.dangerous.db.entity.Faction;
 import com.elite.dangerous.db.entity.Mission;
 import com.elite.dangerous.db.entity.StarSystem;
 import com.elite.dangerous.dto.json.Event;
+import com.elite.dangerous.dto.json.FactionEffect;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,7 @@ public class MissionProcessor {
             mission = createMission(event);
             log.debug("Mission not found to update. Mission created");
         }
-        if (mission.getInfluence() == null) {
+        if (mission.getInfluence() == null || !mission.getInfluence().equals(getInfluence(event))) {
             mission.setInfluence(getInfluence(event));
         }
         mission.setStatus(StatusMission.of(event.getEvent()));
@@ -92,8 +93,9 @@ public class MissionProcessor {
         if (event.getInfluence() != null) {
             return (byte) event.getInfluence().length();
         }
-        if (event.getFactionEffects() != null && !event.getFactionEffects().isEmpty() && !event.getFactionEffects().get(0).getInfluence().isEmpty()) {
-            return (byte) event.getFactionEffects().get(0).getInfluence().get(0).getInfluence().length();
+        if (event.getFactionEffects() != null && !event.getFactionEffects().isEmpty()) {
+            FactionEffect effect = event.getFactionEffects().stream().filter(factionEffect -> factionEffect.getInfluence().get(0).getTrend().equals("UpGood")).findFirst().get();
+            return (byte) effect.getInfluence().get(0).getInfluence().length();
         }
         return 0;
     }

@@ -1,17 +1,19 @@
 package com.elite.dangerous.tg;
 
+import com.elite.dangerous.tg.dto.OutgoingMessage;
+import com.elite.dangerous.tg.processor.ActionProcessor;
 import com.elite.dangerous.tg.processor.CommandMessageProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Slf4j
@@ -23,10 +25,14 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Value("${telegram.configuration.token}")
     private String token;
     private CommandMessageProcessor commandMessageProcessor;
+    private ActionProcessor actionProcessor;
 
     @Autowired
-    public TelegramBot(CommandMessageProcessor commandMessageProcessor) {
+    public TelegramBot(
+            CommandMessageProcessor commandMessageProcessor,
+            ActionProcessor actionProcessor) {
         this.commandMessageProcessor = commandMessageProcessor;
+        this.actionProcessor = actionProcessor;
     }
 
     @Override
@@ -36,10 +42,10 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (incomingMsg != null) {
             String incomingMsgText = incomingMsg.getText();
             if (incomingMsgText != null) {
-                BotApiMethod message = commandMessageProcessor.answerToIncomingMessage(incomingMsg);
+                OutgoingMessage message = commandMessageProcessor.answerToIncomingMessage(incomingMsg);
                 try {
-                    if(message != null) {
-                        Message message1 = (Message) execute (message);
+                    if(message.getMessage() != null) {
+                        Message answerMessage = (Message) execute (message.getMessage());
                     }
                 } catch (TelegramApiException ex) {
                     log.error("Error execute command", ex);
@@ -48,9 +54,13 @@ public class TelegramBot extends TelegramLongPollingBot {
             }
         } else if (update.getCallbackQuery() != null) {
             CallbackQuery callbackQuery = update.getCallbackQuery();
-            BotApiMethod query = commandMessageProcessor.processCallback(callbackQuery);
+            OutgoingMessage outgoingMessage = commandMessageProcessor.processCallback(callbackQuery);
             try {
-                execute(query);
+                Serializable answerMessage = execute(outgoingMessage.getMessage());
+                if (outgoingMessage.getNextAction() != null) {
+                    Message message = (Message) answerMessage;
+                    actionProcessor.processAction(outgoingMessage.getNextAction(), message);
+                }
             } catch (TelegramApiException ex) {
                 log.error("Error execute answerCallbackQuery", ex);
             }
