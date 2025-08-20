@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class FactionEffectInfluence {
+public class FactionEffectInfluenceDto {
     @JsonProperty(value = "Influence")
     private String influence;
     @JsonProperty(value = "Trend")

@@ -4,18 +4,23 @@
                    xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro
                     http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <changeSet id="add_faction_id_to_tg_messages" author="Alexander">
-        <addColumn tableName="tg_messages">
+    <changeSet id="add_faction_id_to_tg_message" author="Alexander">
+        <addColumn tableName="tg_message">
             <column name="faction_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="add_tg_message_columns" author="Alexander">
+        <addColumn tableName="tg_message">
+            <column name="type_message" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
     <changeSet id="initial_fk_influence_faction" author="Alexander (generated)">
-        <addForeignKeyConstraint baseColumnNames="faction_id" baseTableName="tg_messages"
+        <addForeignKeyConstraint baseColumnNames="faction_id" baseTableName="tg_message"
                                  constraintName="fk_tg_messages_faction" deferrable="false" initiallyDeferred="false"
                                  onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
                                  referencedTableName="faction" validate="true"/>
     </changeSet>
-    
 </databaseChangeLog>

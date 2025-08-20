@@ -1,11 +1,11 @@
 package com.elite.dangerous.db.entity;
 
-import lombok.Data;
 import com.elite.dangerous.db.StatusMission;
+import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
-import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -37,7 +37,7 @@ public class Mission {
     private String statusValue;
     private String missionId;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
 
     @PostLoad
     void fillTransient() {

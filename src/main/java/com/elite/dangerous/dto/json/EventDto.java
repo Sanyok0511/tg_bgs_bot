@@ -3,11 +3,11 @@ package com.elite.dangerous.dto.json;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class Event {
+public class EventDto {
     @JsonProperty(value = "Commander")
     private String commander;
     @JsonProperty(required = true)
@@ -33,17 +33,17 @@ public class Event {
     @JsonProperty(value = "Reward")
     private String reward;
     @JsonProperty(value = "timestamp")
-    private Date timestamp;
+    private LocalDateTime timestamp;
     @JsonProperty(value = "Wing")
     private boolean wing;
     @JsonProperty(value = "Expiry")
-    private Date expiry;
+    private LocalDateTime expiry;
     @JsonProperty(value = "Conflicts")
-    private  List<DetailConflict> conflicts;
+    private  List<DetailConflictDto> conflicts;
     @JsonProperty(value = "Factions")
-    private List<Faction> factions;
+    private List<FactionDto> factionDtos;
     @JsonProperty(value = "FactionEffects")
-    private List<FactionEffect> factionEffects;
+    private List<FactionEffectDto> factionEffectDtos;
 
     @Override
     public String toString() {
@@ -64,8 +64,8 @@ public class Event {
                 ", wing=" + wing +
                 ", expiry=" + expiry +
                 ", conflicts=" + conflicts +
-                ", factions=" + factions +
-                ", factionEffects=" + factionEffects +
+                ", factions=" + factionDtos +
+                ", factionEffects=" + factionEffectDtos +
                 '}';
     }
 }

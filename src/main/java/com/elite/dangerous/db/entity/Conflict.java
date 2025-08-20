@@ -1,11 +1,11 @@
 package com.elite.dangerous.db.entity;
 
-import lombok.Data;
 import com.elite.dangerous.db.WarType;
+import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
-import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -34,8 +34,7 @@ public class Conflict {
     private WarType warType;
     @Column(name = "war_type")
     private String warTypeValue;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
 
     @PostLoad
     void fillTransient() {

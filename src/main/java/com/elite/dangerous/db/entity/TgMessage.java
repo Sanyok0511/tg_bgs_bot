@@ -1,16 +1,19 @@
 package com.elite.dangerous.db.entity;
 
 import com.elite.dangerous.db.TypeMessage;
+import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
+@Data
 @Entity
+@Table(name = "tg_message")
 public class TgMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "message_id")
-    private Long messageId;
+    private Integer messageId;
     @Column(name = "chat_id")
     private Long chatId;
     @ManyToOne
@@ -19,5 +22,4 @@ public class TgMessage {
     @Column(name = "type_message")
     @Enumerated(EnumType.STRING)
     private TypeMessage typeMessage;
-
 }

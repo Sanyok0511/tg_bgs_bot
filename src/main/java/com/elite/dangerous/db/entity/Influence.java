@@ -1,10 +1,11 @@
 package com.elite.dangerous.db.entity;
 
-import lombok.Data;
-import org.hibernate.annotations.Cascade;
 
-import javax.persistence.*;
-import java.util.Date;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
 
 @Data
 @Entity
@@ -15,13 +16,11 @@ public class Influence {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "faction_id", nullable = false, foreignKey = @ForeignKey(name = "FK_influence_faction"))
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Faction faction;
     @ManyToOne
     @JoinColumn(name = "star_system_id", nullable = false, foreignKey = @ForeignKey(name = "FK_influence_star_system"))
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private StarSystem starSystem;
     private Float influence;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
 }

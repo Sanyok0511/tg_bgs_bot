@@ -105,10 +105,10 @@
             <column name="name" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet id="initial_tg_messages" author="Alexander (generated)">
-        <createTable tableName="tg_messages">
+    <changeSet id="initial_tg_message" author="Alexander (generated)">
+        <createTable tableName="tg_message">
             <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="tg_messages_pkey"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tg_message_pkey"/>
             </column>
             <column name="chat_id" type="BIGINT"/>
             <column name="message_id" type="BIGINT"/>

@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class FactionEffect {
+public class FactionEffectDto {
     @JsonProperty(value = "Faction")
     private String faction;
     @JsonProperty(value = "Influence")
-    private List<FactionEffectInfluence> influence;
+    private List<FactionEffectInfluenceDto> influence;
 }

@@ -3,7 +3,7 @@ package com.elite.dangerous.db.entity;
 import com.elite.dangerous.db.ApplicationSettingName;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

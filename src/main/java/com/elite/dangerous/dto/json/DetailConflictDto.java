@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class DetailConflict {
+public class DetailConflictDto {
     @JsonProperty("Faction1")
-    private ConflictFaction factionLeft;
+    private ConflictFactionDto factionLeft;
     @JsonProperty("Faction2")
-    private ConflictFaction factionRight;
+    private ConflictFactionDto factionRight;
     @JsonProperty("Status")
     private String status;
     @JsonProperty("WarType")

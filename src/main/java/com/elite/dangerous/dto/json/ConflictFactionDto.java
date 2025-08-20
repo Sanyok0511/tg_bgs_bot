@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Faction {
-    @JsonProperty("Allegiance")
-    private String allegiance;
-    @JsonProperty("Influence")
-    private float influence;
+public class ConflictFactionDto {
     @JsonProperty("Name")
     private String name;
-
+    @JsonProperty("Stake")
+    private String stake;
+    @JsonProperty("WonDays")
+    private byte wonDays;
 }

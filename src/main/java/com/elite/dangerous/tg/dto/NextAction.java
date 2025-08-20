@@ -1,6 +1,7 @@
 package com.elite.dangerous.tg.dto;
 
 public enum NextAction {
-    SEND_STATISTIC,
-    CREATE_INFLUENCE_MESSAGE
+    CREATE_CONFLICT_MESSAGE,
+    CREATE_INFLUENCE_MESSAGE,
+    CREATE_MISSION_MESSAGE
 }
